@@ -46,10 +46,17 @@ $path = $_SERVER['REQUEST_URI'];
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'comments') ? 'text-secondary' : '' ?>"
+                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'charts') ? 'text-secondary' : '' ?>"
                         href="/php-course-blog/admin-panel/pages/charts/index.php">
                         <i class="bi bi-clipboard-data-fill fs-4 text-secondary"></i>
                         <span class="fw-bold">چارت ها</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'positions') ? 'text-secondary' : '' ?>"
+                        href="/php-course-blog/admin-panel/pages/positions/index.php">
+                        <i class="bi bi-people-fill fs-4 text-secondary"></i>
+                        <span class="fw-bold">نقش ها</span>
                     </a>
                 </li>
 

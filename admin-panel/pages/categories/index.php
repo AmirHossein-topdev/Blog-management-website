@@ -1,6 +1,23 @@
 <?php
 include "../../include/layout/header.php";
 
+if (!in_array($user['position'], ['Main Manager', 'Blog Manager'])) {
+    // اگر نه مدیر اصلی بود نه مدیر وبلاگ، اجازه نده
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'دسترسی محدود',
+            text: 'فقط مدیر اصلی یا مدیر وبلاگ می‌تواند به این صفحه دسترسی داشته باشد!',
+            confirmButtonText: 'باشه'
+        }).then(function() {
+            window.location.href = '../../index.php';
+        });
+    </script>";
+    exit();
+}
+
+
 $categories = $db->query("SELECT * FROM categories ORDER BY id DESC");
 
 if (isset($_GET['action']) && isset($_GET['id'])) {
@@ -20,11 +37,12 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
         <!-- Sidebar Section -->
         <?php
         include "../../include/layout/sidebar.php"
-        ?>
+            ?>
 
         <!-- Main Section -->
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="fs-3 fw-bold">دسته بندی ها</h1>
 
                 <div class="btn-toolbar mb-2 mb-md-0">
@@ -36,7 +54,7 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 
             <!-- Categories -->
             <div class="mt-4">
-                <?php if ($categories->rowCount() > 0) : ?>
+                <?php if ($categories->rowCount() > 0): ?>
                     <div class="table-responsive small">
                         <table class="table table-hover align-middle">
                             <thead>
@@ -47,20 +65,22 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($categories as $category) : ?>
+                                <?php foreach ($categories as $category): ?>
                                     <tr>
                                         <th><?= $category['id'] ?></th>
                                         <td><?= $category['title'] ?></td>
                                         <td>
-                                            <a href="./edit.php?id=<?= $category['id'] ?>" class="btn btn-sm btn-outline-dark">ویرایش</a>
-                                            <a href="index.php?action=delete&id=<?= $category['id'] ?>" class="btn btn-sm btn-outline-danger">حذف</a>
+                                            <a href="./edit.php?id=<?= $category['id'] ?>"
+                                                class="btn btn-sm btn-outline-dark">ویرایش</a>
+                                            <a href="index.php?action=delete&id=<?= $category['id'] ?>"
+                                                class="btn btn-sm btn-outline-danger">حذف</a>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>
                             </tbody>
                         </table>
                     </div>
-                <?php else : ?>
+                <?php else: ?>
                     <div class="col">
                         <div class="alert alert-danger">
                             دسته بندی یافت نشد ....
@@ -74,4 +94,4 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 
 <?php
 include "../../include/layout/footer.php"
-?>
+    ?>

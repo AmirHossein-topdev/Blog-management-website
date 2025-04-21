@@ -32,6 +32,9 @@ $postsCount = $db->query("SELECT COUNT(*) FROM posts")->fetchColumn();
 $commentsCount = $db->query("SELECT COUNT(*) FROM comments")->fetchColumn();
 $categoriesCount = $db->query("SELECT COUNT(*) FROM categories")->fetchColumn();
 
+
+
+
 ?>
 
 <div class="container-fluid">

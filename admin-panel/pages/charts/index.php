@@ -1,5 +1,21 @@
 <?php
 include "../../include/layout/header.php";
+// بررسی اینکه کاربر مدیر اصلی باشه یا نه
+if ($user['position'] !== 'Main Manager') {
+    // اگر مدیر اصلی نیست، یک اسکریپت جاوا اسکریپت برای نمایش SweetAlert اضافه کن
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'دسترسی محدود',
+            text: 'فقط مدیر اصلی میتواند به این صفحه دسترسی داشته باشد!',
+            confirmButtonText: 'باشه'
+        }).then(function() {
+            window.location.href = '../../index.php';
+        });
+    </script>";
+    exit();
+}
 
 // اتصال به دیتابیس
 $monthlyPosts = $db->query("
@@ -29,7 +45,8 @@ $categoryPosts = $db->query("
         <?php include "../../include/layout/sidebar.php" ?>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+            <div
+                class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
                 <h1 class="fs-3 fw-bold">نمودارهای آماری مقالات</h1>
             </div>
 

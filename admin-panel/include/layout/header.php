@@ -6,6 +6,7 @@ include(__DIR__ . "/../db.php");
 
 $path = $_SERVER['REQUEST_URI'];
 
+// بررسی لاگین بودن
 if (!isset($_SESSION['email'])) {
     if (str_contains($path, 'pages')) {
         header("Location:../auth/login.php?err_msg=در ابتدا باید وارد سیستم شوید");
@@ -15,6 +16,36 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
+// گرفتن position از دیتابیس
+$position = '';
+if (isset($_SESSION['email'])) {
+    $email = $_SESSION['email'];
+
+    $stmt = $db->prepare("SELECT position FROM users WHERE email = :email LIMIT 1");
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        $raw_position = $user['position'];
+
+        // ترجمه موقعیت
+        switch ($raw_position) {
+            case 'Main Manager':
+                $position = 'مدیر اصلی';
+                break;
+            case 'Author':
+                $position = 'نویسنده';
+                break;
+            case 'Blog Manager':
+                $position = 'مدیر وبلاگ';
+                break;
+            default:
+                $position = 'نامشخص';
+                break;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,13 +68,12 @@ if (!isset($_SESSION['email'])) {
 </head>
 
 <body>
-    <header class="navbar sticky-top bg-secondary flex-md-nowrap p-0 shadow-sm">
+    <header
+        class="navbar sticky-top bg-secondary p-0 shadow-sm align-items-center d-flex justify-content-betweem justify-content-md-start">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-5 text-white" href="index.html">پنل ادمین</a>
-
-        <button class="ms-2 nav-link px-3 text-white d-md-none" type="button" data-bs-toggle="offcanvas"
+        <span class="text-white me-3 fw-bold">سمت: <?php echo htmlspecialchars($position); ?></span>
+        <button class="ms-2 nav-link px-3 text-white d-md-none " type="button" data-bs-toggle="offcanvas"
             data-bs-target="#sidebarMenu">
             <i class="bi bi-justify-left fs-2"></i>
         </button>
-
-
     </header>
