@@ -163,41 +163,43 @@ $categoriesCount = $db->query("SELECT COUNT(*) FROM categories")->fetchColumn();
             </div>
 
             <!-- Categories -->
-            <div class="mt-4 bg-light-subtle">
-                <h4 class="text-secondary fw-bold">دسته بندی</h4>
-                <?php if ($categories->rowCount() > 0): ?>
-                    <div class="table-responsive small">
-                        <table class="table table-hover align-middle">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>عنوان</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($categories as $category): ?>
+            <?php if (in_array($user['position'], ['Main Manager', 'Blog Manager'])): ?>
+                <div class="mt-4 bg-light-subtle">
+                    <h4 class="text-secondary fw-bold">دسته بندی</h4>
+                    <?php if ($categories->rowCount() > 0): ?>
+                        <div class="table-responsive small">
+                            <table class="table table-hover align-middle">
+                                <thead>
                                     <tr>
-                                        <th><?= $category['id'] ?></th>
-                                        <td><?= $category['title'] ?></td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-outline-dark">ویرایش</a>
-                                            <a href="index.php?entity=category&action=delete&id=<?= $category['id'] ?>"
-                                                class="btn btn-sm btn-outline-danger">حذف</a>
-                                        </td>
+                                        <th>id</th>
+                                        <th>عنوان</th>
+                                        <th>عملیات</th>
                                     </tr>
-                                <?php endforeach ?>
-                            </tbody>
-                        </table>
-                    </div>
-                <?php else: ?>
-                    <div class="col">
-                        <div class="alert alert-danger">
-                            دسته بندی یافت نشد ....
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($categories as $category): ?>
+                                        <tr>
+                                            <th><?= $category['id'] ?></th>
+                                            <td><?= $category['title'] ?></td>
+                                            <td>
+                                                <a href="#" class="btn btn-sm btn-outline-dark">ویرایش</a>
+                                                <a href="index.php?entity=category&action=delete&id=<?= $category['id'] ?>"
+                                                    class="btn btn-sm btn-outline-danger">حذف</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                <?php endif ?>
-            </div>
+                    <?php else: ?>
+                        <div class="col">
+                            <div class="alert alert-danger">
+                                دسته بندی یافت نشد ....
+                            </div>
+                        </div>
+                    <?php endif ?>
+                </div>
+            <?php endif; ?>
         </main>
     </div>
 </div>

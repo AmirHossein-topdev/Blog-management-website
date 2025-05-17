@@ -46,6 +46,22 @@ if (isset($_SESSION['email'])) {
         }
     }
 }
+$gender = '';
+$stmt = $db->prepare("SELECT gender FROM users WHERE email = :email LIMIT 1");
+$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+$stmt->execute();
+if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $gender = $row['gender'] === 'male' ? 'آقای' : ($row['gender'] === 'female' ? 'خانم' : '');
+}
+$f_name = '';
+$stmt = $db->prepare("SELECT f_name FROM users WHERE email = :email LIMIT 1");
+$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($result && isset($result['f_name'])) {
+    $f_name = $result['f_name'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -68,10 +84,39 @@ if (isset($_SESSION['email'])) {
 </head>
 
 <body>
+    <?php
+    // بررسی URL
+    $url = $_SERVER['REQUEST_URI'];
+    $bgClass = 'bg-secondary'; // پیش‌فرض
+    
+    if (strpos($url, 'admin-panel/index.php') !== false) {
+        $bgClass = 'bg-primary';
+    } elseif (strpos($url, 'comments') !== false) {
+        $bgClass = 'bg-success';
+    } elseif (strpos($url, 'categories') !== false) {
+        $bgClass = 'bg-info';
+    } elseif (strpos($url, 'posts') !== false) {
+        $bgClass = 'bg-warning';
+    } elseif (strpos($url, 'charts') !== false) {
+        $bgClass = 'bg-danger';
+    } elseif (strpos($url, 'positions') !== false) {
+        $bgClass = 'bg-success-subtle';
+    }
+    ?>
+
     <header
-        class="navbar sticky-top bg-secondary p-0 shadow-sm align-items-center d-flex justify-content-betweem justify-content-md-start">
+        class="navbar sticky-top <?= $bgClass ?> p-0 shadow-sm align-items-center d-flex justify-content-between justify-content-md-start">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-5 text-white" href="index.html">پنل ادمین</a>
-        <span class="text-white me-3 fw-bold">سمت: <?php echo htmlspecialchars($position); ?></span>
+        <span class="text-white me-3 fw-bold">
+
+            سمت:
+            <?php echo htmlspecialchars($position); ?>
+            -
+            <?php echo htmlspecialchars($gender); ?>
+            <?php echo htmlspecialchars($f_name); ?>
+
+
+        </span>
         <button class="ms-2 nav-link px-3 text-white d-md-none " type="button" data-bs-toggle="offcanvas"
             data-bs-target="#sidebarMenu">
             <i class="bi bi-justify-left fs-2"></i>

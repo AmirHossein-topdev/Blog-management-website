@@ -12,53 +12,68 @@ $path = $_SERVER['REQUEST_URI'];
 
             <ul class="nav flex-column pe-3">
                 <li class="nav-item">
-                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'pages') ? '' : 'text-secondary' ?>"
+                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'pages') ? '' : 'text-primary' ?>"
                         href="/php-course-blog/admin-panel/index.php">
-                        <i class="bi bi-house-fill fs-4 text-secondary"></i>
+                        <i
+                            class="bi bi-house-fill fs-4 <?= str_contains($path, 'admin-panel/index.php') ? 'text-primary' : 'text-secondary' ?>"></i>
                         <span class="fw-bold">داشبورد</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'posts') ? 'text-secondary' : '' ?>"
+                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'posts') ? 'text-primary' : '' ?>"
                         href="/php-course-blog/admin-panel/pages/posts/index.php">
-                        <i class="bi bi-file-earmark-image-fill fs-4 text-secondary"></i>
+                        <i
+                            class="bi bi-file-earmark-image-fill fs-4  <?= str_contains($path, 'posts') ? 'text-primary' : 'text-secondary' ?>"></i>
                         <span class="fw-bold">مقالات</span>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'categories') ? 'text-secondary' : '' ?>"
-                        href="/php-course-blog/admin-panel/pages/categories/index.php">
-                        <i class="bi bi-folder-fill fs-4 text-secondary"></i>
+                <?php if (in_array($user['position'], ['Main Manager', 'Blog Manager'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'categories') ? 'text-primary' : '' ?>"
+                            href="/php-course-blog/admin-panel/pages/categories/index.php">
+                            <i
+                                class="bi bi-folder-fill fs-4 <?= str_contains($path, 'categories') ? 'text-primary' : 'text-secondary' ?>"></i>
+                            <span class="fw-bold">دسته بندی</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
-                        <span class="fw-bold">دسته بندی</span>
-                    </a>
-                </li>
+                <?php if (in_array($user['position'], ['Main Manager'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'comments') ? 'text-primary' : '' ?>"
+                            href="/php-course-blog/admin-panel/pages/comments/index.php">
+                            <i
+                                class="bi bi-chat-left-text-fill fs-4 <?= str_contains($path, 'comments') ? 'text-primary' : 'text-secondary' ?>"></i>
 
-                <li class="nav-item">
-                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'comments') ? 'text-secondary' : '' ?>"
-                        href="/php-course-blog/admin-panel/pages/comments/index.php">
-                        <i class="bi bi-chat-left-text-fill fs-4 text-secondary"></i>
+                            <span class="fw-bold">کامنت ها</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
-                        <span class="fw-bold">کامنت ها</span>
-                    </a>
-                </li>
+                <?php if (in_array($user['position'], ['Main Manager'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'charts') ? 'text-primary' : '' ?>"
+                            href="/php-course-blog/admin-panel/pages/charts/index.php">
+                            <i
+                                class="bi bi-clipboard-data-fill fs-4 <?= str_contains($path, 'charts') ? 'text-primary' : 'text-secondary' ?>"></i>
+                            <span class="fw-bold">چارت ها</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
 
-                <li class="nav-item">
-                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'charts') ? 'text-secondary' : '' ?>"
-                        href="/php-course-blog/admin-panel/pages/charts/index.php">
-                        <i class="bi bi-clipboard-data-fill fs-4 text-secondary"></i>
-                        <span class="fw-bold">چارت ها</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'positions') ? 'text-secondary' : '' ?>"
-                        href="/php-course-blog/admin-panel/pages/positions/index.php">
-                        <i class="bi bi-people-fill fs-4 text-secondary"></i>
-                        <span class="fw-bold">نقش ها</span>
-                    </a>
-                </li>
+                <?php if (in_array($user['position'], ['Main Manager'])): ?>
+                    <li class="nav-item">
+                        <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2 <?= str_contains($path, 'positions') ? 'text-primary' : '' ?>"
+                            href="/php-course-blog/admin-panel/pages/positions/index.php">
+                            <i
+                                class="bi bi-people-fill fs-4 <?= str_contains($path, 'positions') ? 'text-primary' : 'text-secondary' ?>"></i>
+                            <span class="fw-bold">نقش ها</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+
 
                 <li class="nav-item">
                     <a class="nav-link link-body-emphasis text-decoration-none d-flex align-items-center gap-2"

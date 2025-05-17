@@ -22,8 +22,8 @@ if (isset($_GET['category'])) {
             <!-- Posts Content -->
             <div class="col-lg-8">
                 <div class="row g-3">
-                    <?php if ($posts->rowCount() > 0) : ?>
-                        <?php foreach ($posts as $post) : ?>
+                    <?php if ($posts->rowCount() > 0): ?>
+                        <?php foreach ($posts as $post): ?>
                             <?php
                             $categoryId = $post['category_id'];
                             $postCategory = $db->query("SELECT * FROM categories WHERE id = $categoryId")->fetch();
@@ -31,7 +31,8 @@ if (isset($_GET['category'])) {
 
                             <div class="col-sm-6">
                                 <div class="card">
-                                    <img src="./uploads/posts/<?= $post['image'] ?>" class="card-img-top" alt="post-image" />
+                                    <img src="./uploads/posts/<?= $post['image'] ?>" class="card-img-top"
+                                        style="height:200px; alt=" post-image />
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
                                             <h5 class="card-title fw-bold">
@@ -45,7 +46,7 @@ if (isset($_GET['category'])) {
                                             <?= substr($post['body'], 0, 500) . "..." ?>
                                         </p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <a href="single.php?post=<?= $post['id']?>" class="btn btn-sm btn-dark">مشاهده</a>
+                                            <a href="single.php?post=<?= $post['id'] ?>" class="btn btn-sm btn-dark">مشاهده</a>
 
                                             <p class="fs-7 mb-0">
                                                 نویسنده : <?= $post['author'] ?>
@@ -55,7 +56,7 @@ if (isset($_GET['category'])) {
                                 </div>
                             </div>
                         <?php endforeach ?>
-                    <?php else : ?>
+                    <?php else: ?>
                         <div class="col">
                             <div class="alert alert-danger">
                                 مقاله ای یافت نشد ....

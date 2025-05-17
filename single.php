@@ -13,17 +13,17 @@ if (isset($_GET['post'])) {
 
 <main>
     <!-- Content -->
-    <section class="mt-4">
+    <section class="mt-4 mx-auto">
         <div class="row">
             <!-- Posts & Comments Content -->
-            <?php if (empty($post)) : ?>
-                <div class="col-lg-8">
+            <?php if (empty($post)): ?>
+                <div class="">
                     <div class="alert alert-danger">
                         مقاله ای یافت نشد ....
                     </div>
                 </div>
-            <?php else : ?>
-                <div class="col-lg-8">
+            <?php else: ?>
+                <div class="">
                     <div class="row justify-content-center">
                         <?php
                         $categoryId = $post['category_id'];
@@ -115,8 +115,8 @@ if (isset($_GET['post'])) {
 
                             ?>
                             <p class="fw-bold fs-6">تعداد کامنت : <?= $comments->rowCount() ?></p>
-                            <?php if ($comments->rowCount() > 0) : ?>
-                                <?php foreach ($comments as $comment) : ?>
+                            <?php if ($comments->rowCount() > 0): ?>
+                                <?php foreach ($comments as $comment): ?>
                                     <div class="card bg-light-subtle mb-3">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center">
@@ -133,7 +133,7 @@ if (isset($_GET['post'])) {
                                         </div>
                                     </div>
                                 <?php endforeach ?>
-                            <?php else : ?>
+                            <?php else: ?>
                                 <div class="alert alert-danger" role="alert">
                                     نظری برای این مقاله ثبت نشده است.
                                 </div>
@@ -143,9 +143,7 @@ if (isset($_GET['post'])) {
                 </div>
             <?php endif ?>
 
-            <?php
-            include "./include/layout/sidebar.php";
-            ?>
+
         </div>
     </section>
 </main>
